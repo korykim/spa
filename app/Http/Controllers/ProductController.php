@@ -4,33 +4,53 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Redis\RedisManager;
+use Illuminate\Support\Facades\Redis;
+use Laravel\Sanctum\Sanctum;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class ProductController extends Controller
 {
 
-//    public function __construct()
-//    {
-//        $this->middleware(
-//            [
-//                'auth:sanctum',
-//                'scopes:*'
-//            ])->except(
-//            [
-//                'index', 'show'
-//            ]
-//        );
-//    }
+    public function __construct()
+    {
+        $this->middleware(
+            [
+                'auth:sanctum',
+                'scopes:*'
+            ])->except(
+            [
+                'index', 'show'
+            ]
+        );
+    }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return string
      */
-    public function index()
+    public function index(Request $request)
     {
-        //$Product = Product::all();
-        $Product=["aa"=>"aa"];
-        return response()->json(['success' => $Product], 200);
+
+        $Product = Product::all();
+
+        $myuser=$request->user();
+        $mytokens=$myuser->tokens;
+
+        //$Authorization=$request->headers->get('Authorization');
+        //[$id, $token] = explode('|',str_replace("Bearer ","",$Authorization), 2);
+        //$mytoken=PersonalAccessToken::findtoken($token);
+
+        //Auth 门面访问当前用户
+//        Auth::guard('api')->user(); // 登录用户实例
+//        Auth::guard('api')->check(); // 用户是否登录
+//        Auth::guard('api')->id(); // 登录用户ID
+
+        //$result=Redis::set('name','phpstorm');
+
+        return response()->json(['success' => $Product,'user'=>$myuser], 200);
+
     }
 
     /**
