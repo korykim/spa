@@ -1,0 +1,157 @@
+"A date string with format `Y-m-d`, e.g. `2011-05-23`."
+scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
+
+"A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
+scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
+
+type Query {
+    users: [User!]! @all
+    user(id: ID @eq): User @find
+
+    #news: [News!]! @paginate(defaultCount: 10)
+    #news(id: ID @eq): News @find
+
+    #pinglun:[Pinglun!]! @all
+
+    posts: [Post!]! @all
+    post(id: ID @eq): Post @find
+
+    Pages: [Page!]!@all
+    page (id: ID @eq): Page @find
+
+    comments: [Comment!]! @all
+
+}
+
+# Query 查询
+#{
+#    user(id:2) {
+#        posts {
+#            id
+#            title
+#            author
+#            body
+#            created_at
+#            updated_at
+#            comments {
+#                id
+#                content
+#            }
+#        }
+#        pages {
+#            id
+#            title
+#            slug
+#            content
+#
+#            comments {
+#                id
+#                content
+#            }
+#        }
+#    }
+#
+#}
+
+
+# 创建Post
+
+#mutation {
+#    createPost(
+#        input: { title: "My new Post2", author: "hello2", body: "my body2",user_id:2}
+#    ) {
+#        id
+#        title
+#        author
+#        body
+#    }
+#}
+
+
+
+type Mutation {
+    createPost(input: CreatePostInput! @spread): Post @create
+
+}
+
+input CreatePostInput {
+    title: String!
+    author: String!
+    body: String!
+    user_id: Int!
+    #user:CreateUserBelongsTo!
+}
+
+# 创建用户
+
+#mutation {
+#    createUser(name: "John", email: "john.doe@example.com", password: "secret") {
+#        id
+#        name
+#        email
+#    }
+#}
+#
+#
+type Mutation {
+    createUser(
+        name: String!
+        email: String! @rules(apply: ["email", "unique:users"])
+        password: String! @Hash @rules(apply: ["min:6"])
+    ): User @create
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+    posts:[Post]!@hasMany
+    pages:[Page]!@hasMany
+
+}
+
+type Post{
+    id: ID!
+    title: String!
+    author: String!
+    body: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+    comments: [Comment!] @morphMany
+}
+
+type Page{
+    id: ID!
+    title: String!
+    slug: String!
+    content: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+    comments: [Comment!] @morphMany
+}
+
+type Comment{
+    id: ID!
+    content: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+    commentable: commentable! @morphTo
+}
+
+union commentable = Post | Page
+
+
+#type newsmaker{
+#    id: ID!
+#    name:String!
+#    remark:String!
+#    news: News! @belongsTo
+#}
+#
+#type Pinglun {
+#    id: ID!
+#    reply: String!
+#    news: News! @belongsTo
+#}

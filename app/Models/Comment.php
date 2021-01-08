@@ -11,10 +11,9 @@ class Comment extends Model
         return $this->MorphTo();
 
     }
-
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'commentable');
-    }
+//    public function comments()
+//    {
+//        return $this->morphMany(Comment::class, 'commentable');
+//    }
 
 }

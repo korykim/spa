@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout'], //设置可以进行跨域的路由
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout','graphql'], //设置可以进行跨域的路由
 
     'allowed_methods' => ['*'],
 

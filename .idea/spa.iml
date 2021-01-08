@@ -134,6 +134,12 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/krlove/code-generator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/krlove/eloquent-model-generator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/predis/predis" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/thecodingmachine/safe" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nuwave/lighthouse" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/laragraph/utils" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/haydenpierce/class-finder" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/webonyx/graphql-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/mll-lab/laravel-graphql-playground" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
