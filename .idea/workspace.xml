@@ -1,34 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="75aea381-ea9e-4805-8f3b-0066c19a92f7" name="Default Changelist" comment="+2">
-      <change afterPath="$PROJECT_DIR$/_lighthouse_ide_helper.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/GraphQL/Mutations/AuthMutator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/news.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/newsmaker.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/Models/pinglun.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/lighthouse.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_01_08_091143_create_newsmakers_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_01_08_091419_create_news_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/migrations/2021_01_08_091526_create_pingluns_table.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeders/newsSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeders/newsmakerSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/seeders/pinglunSeeder.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/graphql/schema.graphql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/programmatic-types.graphql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/schema-directives.graphql" afterDir="false" />
+    <list default="true" id="75aea381-ea9e-4805-8f3b-0066c19a92f7" name="Default Changelist" comment="+3">
+      <change afterPath="$PROJECT_DIR$/app/GraphQL/Mutations/PageMutator.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/spa.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/spa.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Comment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/GraphQL/Mutations/AuthMutator.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/GraphQL/Mutations/AuthMutator.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Models/Page.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Page.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/tag.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/tag.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/cors.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/cors.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/lighthouse.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/lighthouse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/schema.graphql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +200,9 @@
       <workItem from="1609826102729" duration="2850000" />
       <workItem from="1609829504717" duration="2694000" />
       <workItem from="1609890430562" duration="5236000" />
-      <workItem from="1609909616796" duration="28952000" />
+      <workItem from="1609909616796" duration="36995000" />
+      <workItem from="1610349328854" duration="837000" />
+      <workItem from="1610350186727" duration="4258000" />
     </task>
     <task id="LOCAL-00001" summary="+2">
       <created>1610066910221</created>
@@ -229,7 +211,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610066910221</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="+3">
+      <created>1610096433374</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1610096433374</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +239,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="+2" />
-    <option name="LAST_COMMIT_MESSAGE" value="+2" />
+    <MESSAGE value="+3" />
+    <option name="LAST_COMMIT_MESSAGE" value="+3" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

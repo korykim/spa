@@ -21,7 +21,77 @@ type Query {
 
     comments: [Comment!]! @all
 
+
+    #查询当前用户token是否登录，需要在HTTP Headers中携带Token值
+    # 指定token值存在User表中，@auth的意思是进行身份验证，简单来讲就是查询token值存不存在
+    me: User @auth(guard: "sanctum")
+
 }
+
+# 用户登录，先在User表中创建api_token字段
+# 需要先创建AuthMutator， php artisan lighthouse:mutation AuthMutator
+# 代码可以查看 AuthMutator.php
+#mutation {
+#    login(email:"korykim@example.com", password:"korykim")
+#}
+
+type Mutation {
+    login(
+        users: String!
+        password: String!
+    ): String @field(resolver: "AuthMutator@resolve")
+
+    createPage(title: String!, slug: String!, content: String!): Page
+    @field(resolver: "PageMutator@create")
+    @guard
+
+    createUser(
+        name: String!
+        email: String! @rules(apply: ["email", "unique:users"])
+        password: String! @Hash @rules(apply: ["min:6"])
+    ): User @create
+
+    createPost(input: CreatePostInput! @spread): Post @create
+
+}
+
+
+# 使用token查询当前用户的数据,需要在HTTP Headers中携带Token值
+# 先登录，在用token进行查询
+
+#{
+#    me {
+#        name
+#        email
+#
+#        posts {
+#            id
+#            title
+#            author
+#            body
+#            created_at
+#            updated_at
+#            comments {
+#                id
+#                content
+#            }
+#        }
+#        pages {
+#            id
+#            title
+#            slug
+#            content
+#
+#            comments {
+#                id
+#                content
+#            }
+#        }
+#    }
+#}
+
+
+
 
 # Query 查询
 #{
@@ -69,10 +139,10 @@ type Query {
 
 
 
-type Mutation {
-    createPost(input: CreatePostInput! @spread): Post @create
-
-}
+#type Mutation {
+#    createPost(input: CreatePostInput! @spread): Post @create
+#
+#}
 
 input CreatePostInput {
     title: String!
@@ -93,13 +163,37 @@ input CreatePostInput {
 #}
 #
 #
-type Mutation {
-    createUser(
-        name: String!
-        email: String! @rules(apply: ["email", "unique:users"])
-        password: String! @Hash @rules(apply: ["min:6"])
-    ): User @create
-}
+#type Mutation {
+#    createUser(
+#        name: String!
+#        email: String! @rules(apply: ["email", "unique:users"])
+#        password: String! @Hash @rules(apply: ["min:6"])
+#    ): User @create
+#}
+
+
+
+
+# 添加 Page
+#mutation {
+#    createPage(
+#        title:"Building a GraphQL Server with Laravel"
+#        slug:"slugs"
+#        content:"In case you're not currently familiar with it, GraphQL is a query language used to interact with your API..."
+#    ) {
+#        id
+#        title
+#    }
+#}
+
+
+# php artisan lighthouse:mutation PageMutator 查看PageMutator.php代码，实现功能就是添加page数据到输入库
+#type Mutation {
+#    createPage(title: String!, slug: String!, content: String!): Page
+#    @field(resolver: "PageMutator@create")
+#    @guard
+#}
+
 
 type User {
     id: ID!
@@ -109,6 +203,9 @@ type User {
     updated_at: DateTime!
     posts:[Post]!@hasMany
     pages:[Page]!@hasMany
+    postCount: Int! @count(relation: "posts")
+    pageCount: Int! @count(relation: "pages")
+
 
 }
 
@@ -120,6 +217,7 @@ type Post{
     created_at: DateTime!
     updated_at: DateTime!
     comments: [Comment!] @morphMany
+
 }
 
 type Page{
@@ -138,20 +236,10 @@ type Comment{
     created_at: DateTime!
     updated_at: DateTime!
     commentable: commentable! @morphTo
+
 }
 
 union commentable = Post | Page
 
 
-#type newsmaker{
-#    id: ID!
-#    name:String!
-#    remark:String!
-#    news: News! @belongsTo
-#}
-#
-#type Pinglun {
-#    id: ID!
-#    reply: String!
-#    news: News! @belongsTo
-#}
+
