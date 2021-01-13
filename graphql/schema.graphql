@@ -4,17 +4,83 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 "A datetime string with format `Y-m-d H:i:s`, e.g. `2018-05-23 13:43:32`."
 scalar DateTime @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
+"Can be used as an argument to upload files using https://github.com/jaydenseric/graphql-multipart-request-spec"
+scalar Upload @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Upload")
+
+
+# extend type以便一次 对所有字段应用@guard
+# extend type Query @guard { ... }
+
 type Query {
     users: [User!]! @all
     user(id: ID @eq): User @find
+
+    userByName(name: String! @eq): User @first
 
     #news: [News!]! @paginate(defaultCount: 10)
     #news(id: ID @eq): News @find
 
     #pinglun:[Pinglun!]! @all
 
-    posts: [Post!]! @all
+    #posts: [Post!]! @all @whereAuth(relation: "user")
+
+    # 降序 DESC 升序  ASC
+    #{
+    #    allPosts(orderBy: [{ column: POSTED_AT, order: ASC }]) {
+    #        title
+    #    }
+    #}
+    allPosts(orderBy: _ @orderBy(columnsEnum: "PostColumn")): [Post!]! @all @whereAuth(relation: "user")
+
+    # 分页排序查询
+    #{
+    #    paginatedPosts(
+    #        orderBy: [{ column: POSTED_AT, order: DESC }]
+    #        first: 3
+    #        page: 1
+    #    ) {
+    #        data {
+    #            id
+    #            title
+    #            author
+    #           createdAt
+    #           updatedAt
+    #            comments {
+    #                   id
+    #                   content
+    #           }
+    #        }
+    #        paginatorInfo {
+    #            currentPage
+    #            lastPage
+    #        }
+    #    }
+    #}
+    paginatedPosts(orderBy: _ @orderBy(columnsEnum: "PostColumn"),first: Int!, page: Int): [Post!]! @paginate(defaultCount: 5,maxCount: 10)
+
+    #分页查询, 返回3条内容， 第二页
+    #{
+    #    posts(first: 3, page: 2) {
+    #        data {
+    #            id
+    #            title
+    #           createdAt
+    #           updatedAt
+    #            comments {
+    #                   id
+    #                   content
+    #           }
+    #        }
+    #        paginatorInfo {
+    #            currentPage
+    #            lastPage
+    #        }
+    #    }
+    #}
+    posts(includeIds: [Int!] @in(key: "id"),first: Int!, page: Int):[Post!]! @paginate(defaultCount: 5,maxCount: 10)
     post(id: ID @eq): Post @find
+
+    postswhereBetween(created_at: DateRange @whereBetween): [Post!]! @all
 
     Pages: [Page!]!@all
     page (id: ID @eq): Page @find
@@ -27,6 +93,21 @@ type Query {
     me: User @auth(guard: "sanctum")
 
 }
+
+input DateRange {
+    from: Date!
+    to: Date!
+}
+
+enum PostColumn {
+    # Another reason why you might want to have a custom enum is to
+    # correct typos or bad naming in column names.
+    POSTED_AT @enum(value: "created_at")
+    TITLE @enum(value: "title")
+    AUTHOR @enum(value: "author")
+    COMMENT @enum(value: "comment")
+}
+
 
 # 用户登录，先在User表中创建api_token字段
 # 需要先创建AuthMutator， php artisan lighthouse:mutation AuthMutator
@@ -41,6 +122,11 @@ type Mutation {
         password: String!
     ): String @field(resolver: "AuthMutator@resolve")
 
+    logout:User
+    #@guard(with: "sanctum")
+    @field(resolver: "Logout@resolve")
+    #@auth(guard: "sanctum")
+
     createPage(title: String!, slug: String!, content: String!): Page
     @field(resolver: "PageMutator@create")
     @guard
@@ -51,7 +137,19 @@ type Mutation {
         password: String! @Hash @rules(apply: ["min:6"])
     ): User @create
 
-    createPost(input: CreatePostInput! @spread): Post @create
+    #createPost(input: CreatePostInput! @spread): Post @create
+    createPost(
+        title: String!
+        author: String!
+        body: String!
+        user_id: Int!
+    ): Post @create @inject(context: "user.id", name: "user_id")
+
+    deletePost(id: ID!): Post @delete
+
+    deletePage(id: ID!): Page @delete
+
+
 
 }
 
@@ -205,18 +303,21 @@ type User {
     pages:[Page]!@hasMany
     postCount: Int! @count(relation: "posts")
     pageCount: Int! @count(relation: "pages")
+    #mySpecialData: String! @method(name: "getMySpecialData")
 
 
 }
 
-type Post{
+#model默认自动匹配模型名称，如果要想使用自定义模型可以这样操作
+type Post @model(class: "\\App\\Models\\Post"){
     id: ID!
     title: String!
     author: String!
     body: String!
-    created_at: DateTime!
-    updated_at: DateTime!
-    comments: [Comment!] @morphMany
+    #created_at: DateTime!
+    createdAt: DateTime! @rename(attribute: "created_at")
+    updatedAt: DateTime! @rename(attribute: "updated_at")
+    comments: [Comment!] @morphMany @lazyLoad(relations: ["commentable"])
 
 }
 
@@ -227,7 +328,7 @@ type Page{
     content: String!
     created_at: DateTime!
     updated_at: DateTime!
-    comments: [Comment!] @morphMany
+    comments: [Comment!] @morphMany @lazyLoad(relations: ["commentable"])
 }
 
 type Comment{

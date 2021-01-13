@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="75aea381-ea9e-4805-8f3b-0066c19a92f7" name="Default Changelist" comment="+3">
-      <change afterPath="$PROJECT_DIR$/app/GraphQL/Mutations/PageMutator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="75aea381-ea9e-4805-8f3b-0066c19a92f7" name="Default Changelist" comment="+4">
+      <change afterPath="$PROJECT_DIR$/app/GraphQL/Mutations/Logout.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/GraphQL/Mutations/AuthMutator.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/GraphQL/Mutations/AuthMutator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Models/Page.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Page.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/lighthouse.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/lighthouse.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/app.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/app.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/graphql/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/graphql/schema.graphql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -202,7 +201,7 @@
       <workItem from="1609890430562" duration="5236000" />
       <workItem from="1609909616796" duration="36995000" />
       <workItem from="1610349328854" duration="837000" />
-      <workItem from="1610350186727" duration="4258000" />
+      <workItem from="1610350186727" duration="25148000" />
     </task>
     <task id="LOCAL-00001" summary="+2">
       <created>1610066910221</created>
@@ -218,7 +217,14 @@
       <option name="project" value="LOCAL" />
       <updated>1610096433374</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="+4">
+      <created>1610355422324</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1610355422324</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -240,7 +246,8 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="+2" />
     <MESSAGE value="+3" />
-    <option name="LAST_COMMIT_MESSAGE" value="+3" />
+    <MESSAGE value="+4" />
+    <option name="LAST_COMMIT_MESSAGE" value="+4" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

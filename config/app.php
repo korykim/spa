@@ -178,6 +178,10 @@ return [
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
+        //light house
+        \Nuwave\Lighthouse\Tracing\TracingServiceProvider::class,
+        \Nuwave\Lighthouse\Defer\DeferServiceProvider::class,
+
     ],
 
     /*

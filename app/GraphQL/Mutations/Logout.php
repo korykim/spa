@@ -2,25 +2,32 @@
 
 namespace App\GraphQL\Mutations;
 
-use App\Models\User;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Hash;
-
-
-use GraphQL\Type\Definition\Type;
+use Auth;
 use GraphQL\Type\Definition\ResolveInfo;
-use Nuwave\Lighthouse\Schema\TypeRegistry;
 use Nuwave\Lighthouse\Support\Contracts\GraphQLContext;
 
-class AuthMutator
+class Logout
 {
     /**
-     * @param null $_
-     * @param array<string, mixed> $args
+     * @param  null  $_
+     * @param  array<string, mixed>  $args
      */
     public function __invoke($_, array $args)
     {
         // TODO implement the resolver
+
+//        $guard = Auth::guard(config('sanctum.guard', 'web'));
+//        /** @var \App\Models\User|null $user */
+//        $user = $guard->user();
+////        $guard->logout();
+////
+////        if ($user->tokens()->delete() == 1) {
+////            return "Bye";
+////        } else {
+////            return "Hello";
+////        }
+//
+//        return $user;
     }
 
     /**
@@ -34,20 +41,19 @@ class AuthMutator
      */
     public function resolve($rootValue, array $args, GraphQLContext $context, ResolveInfo $resolveInfo)
     {
-        $credentials = Arr::only($args, ['users', 'password']);
-
-
-
-        $user = User::where('name', $credentials['users'])->orwhere('email', $credentials['users'])->first();
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            return null;
-        } else {
-//            $token = Str::random(60);
-//            $user->api_token = $token;
-//            $user->save();
-//            return $token;
-            return $user->createToken($user->name, ['*'])->plainTextToken;
-        }
-
+        $guard = Auth::guard(config('sanctum.guard', 'web'));
+        $user = $guard->user();
+        $guard->logout();
+        return $user;
+        //$guard = Auth::guard(config('sanctum.guard', 'web'));
+//        $guard =Auth::guard('api')->user();
+//
+//        $user = $guard->user();
+//        if ($user->tokens()->delete() == 1) {
+//            return "Bye";
+//        } else {
+//            return "Hello";
+//        }
     }
+
 }
